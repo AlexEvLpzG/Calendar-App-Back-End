@@ -1,16 +1,16 @@
 const express = require( 'express' );
+require( 'dotenv' ).config();
 
 // Todo: Crear el servidor de express
 const app = express();
 
+// * Directorio Público
+app.use( express.static('public') );
+
 // * Rutas
-app.get( '/', ( req, res ) => {
-    res.json({
-        ok: true
-    });
-});
+app.use( '/api/auth', require( './routers/auth' ) );
 
 // Todo: Escuchar peticiones
-app.listen( 4000, () => {
-    console.log( 'Servidor Corriendo en el puerto 4000' );
+app.listen( process.env.PORT, () => {
+    console.log( `Servidor Corriendo en el puerto ${ process.env.PORT }` );
 });
