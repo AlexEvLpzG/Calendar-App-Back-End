@@ -8,12 +8,14 @@ const { createEvent, getEvents, updateEvent, deleteEvent } = require('../control
 
 const router = Router();
 
-router.get( '/', validateJWT, getEvents );
+router.use( validateJWT );
 
-router.post( '/', validateJWT, createEvent );
+router.get( '/', getEvents );
 
-router.put( '/:id', validateJWT, updateEvent );
+router.post( '/', createEvent );
 
-router.delete( '/:id', validateJWT, deleteEvent );
+router.put( '/:id', updateEvent );
+
+router.delete( '/:id', deleteEvent );
 
 module.exports = router;
