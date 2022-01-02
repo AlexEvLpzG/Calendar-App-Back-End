@@ -72,9 +72,36 @@ const updateEvent = async( req, res = response ) => {
 };
 
 const deleteEvent = async( req, res = response ) => {
-    res.status(201).json({
-        ok: true,
-    });
+    const eventId = req.params.id;
+    const uid = req.uid;
+
+    try {
+        const event = await Event.findById( eventId );
+
+        if( !event ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'El evento que desea eliminar no existe'
+            });
+        }
+
+        if( event.user.toString() !== uid ) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No tienes privilegios de eliminar este evento'
+            });
+        }
+
+        await Event.findByIdAndDelete( eventId );
+
+        res.status(201).json({ ok: true });
+    } catch ( error ) {
+        console.log( error );
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
 };
 
 module.exports = {
