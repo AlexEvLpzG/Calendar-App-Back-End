@@ -29,7 +29,7 @@ const createUser = async( req, res = response ) => {
 
         res.status(201).json({
             ok: true,
-            uuid: user.id,
+            uid: user.id,
             name: user.name,
             token
         });
@@ -69,7 +69,7 @@ const loginUser = async( req, res = response ) => {
 
         res.status(201).json({
             ok: true,
-            uuid: user.id,
+            uid: user.id,
             name: user.name,
             token
         });
@@ -89,6 +89,8 @@ const renewToken = async( req, res = response ) => {
 
     res.status(201).json({
         ok: true,
+        uid,
+        name,
         token
     });
 } 
